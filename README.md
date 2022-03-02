@@ -3,7 +3,9 @@
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/digital-land/planning-application/blob/main/LICENSE)
 [![Run pipeline](https://github.com/digital-land/planning-application-collection/actions/workflows/run.yml/badge.svg)](https://github.com/digital-land/planning-application-collection/actions/workflows/run.yml)
 
-The data and pipeline to build the [planning-application dataset](https://www.digital-land.info/dataset/planning-application).
+Collect and process the data needed by the following datasets:
+
+* [planning-application](https://www.digital-land.info/dataset/planning-application)
 
 # Collection
 
