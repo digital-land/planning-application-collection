@@ -1,0 +1,69 @@
+PLANNING_APPLICATION_DATASET=$(DATASET_DIR)planning-application.csv
+PLANNING_APPLICATION_TRANSFORMED_FILES=\
+    $(TRANSFORMED_DIR)planning-application/03d28ea65b79c955a5fe01a38ac60bf4e6b1a5dad9fc96fb85bd74148e7362d5.csv\
+    $(TRANSFORMED_DIR)planning-application/28afc46b0fbcb31c48ab63354ff94424b38aeb9918d8b58a696649bbe6df7122.csv\
+    $(TRANSFORMED_DIR)planning-application/3759fe4b4e7077a14a2be44f697fcf5f7e04d80eba3355c63a156801d8242262.csv\
+    $(TRANSFORMED_DIR)planning-application/37bed792c307771ec96ef886e62bdeafff451d2732eeaf85c7d07b68782c2e0a.csv\
+    $(TRANSFORMED_DIR)planning-application/3c8a14622669d6484aee89f2d3de8e80f614444b620ac3d763e61701d1fd6f81.csv\
+    $(TRANSFORMED_DIR)planning-application/5235766dc23b5ce064401830475cb265a11666d495632f8e8d3cc45fc0116737.csv\
+    $(TRANSFORMED_DIR)planning-application/5df67a27cb413eafaab2359a7c502527208ffca143f71ec72bf7804141bf4e87.csv\
+    $(TRANSFORMED_DIR)planning-application/75b606362710044698bfcac0f7068bbb1784b199699b54c1dff1234a9f751df5.csv\
+    $(TRANSFORMED_DIR)planning-application/a63543b0af6f5f679ea31581a9441be4091583a172c9869455a7f7e4fbd547ca.csv\
+    $(TRANSFORMED_DIR)planning-application/a7a374fd4fec5dbe1d8d97fa8cd1ff8ad61ff9c1f1c6cccec179899d421b6688.csv\
+    $(TRANSFORMED_DIR)planning-application/aba03f618ef1f7c3450ec5d6e15deda75e8e2d45155b1c4dadf709eebd3e9dca.csv\
+    $(TRANSFORMED_DIR)planning-application/ae98039ac885333fc3ef1dd6275a008ce3256d20c385bc681dadb9bf22b2a3e4.csv\
+    $(TRANSFORMED_DIR)planning-application/b97ba8470db74fd6772373af6208fd8ab40fb9ae1c820d5a7332c0545f8276ca.csv\
+    $(TRANSFORMED_DIR)planning-application/c081b99d91eb2fa48a633b99c8a752a77b5d55a9b98ffa52f717054972856b50.csv\
+    $(TRANSFORMED_DIR)planning-application/de91f29bcb30323b8a1a3804126615d95f25eb43b468a4ad7d286b3805122bcd.csv
+
+$(TRANSFORMED_DIR)planning-application/03d28ea65b79c955a5fe01a38ac60bf4e6b1a5dad9fc96fb85bd74148e7362d5.csv: collection/resource/03d28ea65b79c955a5fe01a38ac60bf4e6b1a5dad9fc96fb85bd74148e7362d5
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/28afc46b0fbcb31c48ab63354ff94424b38aeb9918d8b58a696649bbe6df7122.csv: collection/resource/28afc46b0fbcb31c48ab63354ff94424b38aeb9918d8b58a696649bbe6df7122
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/3759fe4b4e7077a14a2be44f697fcf5f7e04d80eba3355c63a156801d8242262.csv: collection/resource/3759fe4b4e7077a14a2be44f697fcf5f7e04d80eba3355c63a156801d8242262
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/37bed792c307771ec96ef886e62bdeafff451d2732eeaf85c7d07b68782c2e0a.csv: collection/resource/37bed792c307771ec96ef886e62bdeafff451d2732eeaf85c7d07b68782c2e0a
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/3c8a14622669d6484aee89f2d3de8e80f614444b620ac3d763e61701d1fd6f81.csv: collection/resource/3c8a14622669d6484aee89f2d3de8e80f614444b620ac3d763e61701d1fd6f81
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/5235766dc23b5ce064401830475cb265a11666d495632f8e8d3cc45fc0116737.csv: collection/resource/5235766dc23b5ce064401830475cb265a11666d495632f8e8d3cc45fc0116737
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/5df67a27cb413eafaab2359a7c502527208ffca143f71ec72bf7804141bf4e87.csv: collection/resource/5df67a27cb413eafaab2359a7c502527208ffca143f71ec72bf7804141bf4e87
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/75b606362710044698bfcac0f7068bbb1784b199699b54c1dff1234a9f751df5.csv: collection/resource/75b606362710044698bfcac0f7068bbb1784b199699b54c1dff1234a9f751df5
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/a63543b0af6f5f679ea31581a9441be4091583a172c9869455a7f7e4fbd547ca.csv: collection/resource/a63543b0af6f5f679ea31581a9441be4091583a172c9869455a7f7e4fbd547ca
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/a7a374fd4fec5dbe1d8d97fa8cd1ff8ad61ff9c1f1c6cccec179899d421b6688.csv: collection/resource/a7a374fd4fec5dbe1d8d97fa8cd1ff8ad61ff9c1f1c6cccec179899d421b6688
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/aba03f618ef1f7c3450ec5d6e15deda75e8e2d45155b1c4dadf709eebd3e9dca.csv: collection/resource/aba03f618ef1f7c3450ec5d6e15deda75e8e2d45155b1c4dadf709eebd3e9dca
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/ae98039ac885333fc3ef1dd6275a008ce3256d20c385bc681dadb9bf22b2a3e4.csv: collection/resource/ae98039ac885333fc3ef1dd6275a008ce3256d20c385bc681dadb9bf22b2a3e4
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/b97ba8470db74fd6772373af6208fd8ab40fb9ae1c820d5a7332c0545f8276ca.csv: collection/resource/b97ba8470db74fd6772373af6208fd8ab40fb9ae1c820d5a7332c0545f8276ca
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/c081b99d91eb2fa48a633b99c8a752a77b5d55a9b98ffa52f717054972856b50.csv: collection/resource/c081b99d91eb2fa48a633b99c8a752a77b5d55a9b98ffa52f717054972856b50
+	$(run-pipeline)
+
+$(TRANSFORMED_DIR)planning-application/de91f29bcb30323b8a1a3804126615d95f25eb43b468a4ad7d286b3805122bcd.csv: collection/resource/de91f29bcb30323b8a1a3804126615d95f25eb43b468a4ad7d286b3805122bcd
+	$(run-pipeline)
+
+$(PLANNING_APPLICATION_DATASET): $(PLANNING_APPLICATION_TRANSFORMED_FILES)
+	$(build-dataset)
+
+transformed:: $(PLANNING_APPLICATION_TRANSFORMED_FILES)
+
+dataset:: $(PLANNING_APPLICATION_DATASET)
