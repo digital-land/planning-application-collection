@@ -1,4 +1,4 @@
-pipeline,resource,pattern,value
+dataset,resource,pattern,value
 planning-application,,ExtractDate,entry-date
 planning-application,,OrganisationURI,organisation
 planning-application,,CaseReference,reference
