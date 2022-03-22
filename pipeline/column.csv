@@ -1,4 +1,4 @@
-dataset,resource,pattern,value
+dataset,resource,column,field
 planning-application,,ExtractDate,entry-date
 planning-application,,OrganisationURI,organisation
 planning-application,,CaseReference,reference
