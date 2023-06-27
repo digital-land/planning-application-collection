@@ -30,4 +30,5 @@ collection/resource.csv
 collection/pipeline.mk
 .python-version
 *.sqlite3
+flattened/
 

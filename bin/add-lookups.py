@@ -22,7 +22,6 @@ for row in csv.DictReader(open("specification/dataset.csv")):
     datasets[row["dataset"]] = row
 
 
-"""
 if path.exists("pipeline/lookup.csv"):
     for row in csv.DictReader(open("pipeline/lookup.csv")):
         lookup[key(row)] = row
@@ -32,7 +31,6 @@ if path.exists("pipeline/lookup.csv"):
             dataset = row["prefix"]
             if e > entity[dataset]:
                 entity[dataset] = e + 1
-"""
 
 
 for directory in glob("issue/*"):
