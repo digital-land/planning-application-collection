@@ -13,3 +13,6 @@ planning-application,,Decision,planning-decision
 planning-application,,DecisionType,planning-decision-type
 planning-application,,UPRN,address
 planning-application,,GroundArea,ground-area
+planning-application,,BNG_X,GeoX
+planning-application,,BNG_Y,GeoY
+planning-application,,WKT,geometry
