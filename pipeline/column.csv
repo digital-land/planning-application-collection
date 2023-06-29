@@ -16,3 +16,6 @@ planning-application,,GroundArea,ground-area
 planning-application,,BNG_X,GeoX
 planning-application,,BNG_Y,GeoY
 planning-application,,WKT,geometry
+planning-application,,system_status,planning-application-status
+planning-application,,application_number,reference
+planning-application,,development_address,address-text
