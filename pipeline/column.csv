@@ -11,11 +11,12 @@ planning-application,,LocationText,address-text
 planning-application,,Status,planning-application-status
 planning-application,,Decision,planning-decision
 planning-application,,DecisionType,planning-decision-type
-planning-application,,UPRN,address
-planning-application,,GroundArea,ground-area
+planning-application,,UPRN,uprn
 planning-application,,BNG_X,GeoX
 planning-application,,BNG_Y,GeoY
 planning-application,,WKT,geometry
 planning-application,,system_status,planning-application-status
 planning-application,,application_number,reference
 planning-application,,development_address,address-text
+planning-application,,DecisionDate,decision-date
+
