@@ -4,6 +4,10 @@
 	commit-collection\
 	clobber-today
 
+ifeq ($(COLLECTION_CONFIG_URL),)
+COLLECTION_CONFIG_URL=$(CONFIG_URL)collection/$(COLLECTION_NAME)/
+endif
+
 ifeq ($(COLLECTION_DIR),)
 COLLECTION_DIR=collection/
 endif
@@ -13,13 +17,21 @@ RESOURCE_DIR=$(COLLECTION_DIR)resource/
 endif
 
 ifeq ($(DATASTORE_URL),)
-DATASTORE_URL=https://$(COLLECTION_DATASET_BUCKET_NAME).s3.eu-west-2.amazonaws.com/
+DATASTORE_URL=https://files.planning.data.gov.uk/
 endif
 
 
 # data sources
 SOURCE_CSV=$(COLLECTION_DIR)source.csv
 ENDPOINT_CSV=$(COLLECTION_DIR)endpoint.csv
+OLD_RESOURCE_CSV=$(COLLECTION_DIR)old-resource.csv
+
+ifeq ($(COLLECTION_CONFIG_FILES),)
+COLLECTION_CONFIG_FILES=\
+	$(SOURCE_CSV)\
+	$(ENDPOINT_CSV)\
+	$(OLD_RESOURCE_CSV)
+endif
 
 # collection log
 LOG_DIR=$(COLLECTION_DIR)log/
@@ -34,7 +46,7 @@ first-pass:: collect
 
 second-pass:: collection
 
-collect:: $(SOURCE_CSV) $(ENDPOINT_CSV)
+collect:: $(COLLECTION_CONFIG_FILES)
 	@mkdir -p $(RESOURCE_DIR)
 	digital-land collect $(ENDPOINT_CSV)
 
@@ -69,3 +81,12 @@ endif
 collection/resource/%:
 	@mkdir -p collection/resource/
 	curl -qfsL '$(DATASTORE_URL)$(REPOSITORY)/$(RESOURCE_DIR)$(notdir $@)' > $@
+
+collection/%.csv:
+	@mkdir -p $(COLLECTION_DIR)
+	curl -qfsL '$(COLLECTION_CONFIG_URL)$(notdir $@)' > $@
+
+config:: $(COLLECTION_CONFIG_FILES)
+
+clean::
+	rm -f $(COLLECTION_CONFIG_FILES)
