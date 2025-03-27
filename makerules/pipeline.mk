@@ -4,11 +4,19 @@
 	commit-dataset
 
 # data sources
-# collected resources
+ifeq ($(PIPELINE_CONFIG_URL),)
+PIPELINE_CONFIG_URL=$(CONFIG_URL)pipeline/$(COLLECTION_NAME)/
+endif
+
 ifeq ($(COLLECTION_DIR),)
 COLLECTION_DIR=collection/
 endif
 
+ifeq ($(PIPELINE_DIR),)
+PIPELINE_DIR=pipeline/
+endif
+
+# collected resources
 ifeq ($(RESOURCE_DIR),)
 RESOURCE_DIR=$(COLLECTION_DIR)resource/
 endif
@@ -63,6 +71,21 @@ ifeq ($(EXPECTATION_DIR),)
 EXPECTATION_DIR = expectations/
 endif
 
+ifeq ($(PIPELINE_CONFIG_FILES),)
+PIPELINE_CONFIG_FILES=\
+	$(PIPELINE_DIR)column.csv\
+	$(PIPELINE_DIR)combine.csv\
+	$(PIPELINE_DIR)concat.csv\
+	$(PIPELINE_DIR)convert.csv\
+	$(PIPELINE_DIR)default.csv\
+	$(PIPELINE_DIR)default-value.csv\
+	$(PIPELINE_DIR)filter.csv\
+	$(PIPELINE_DIR)lookup.csv\
+	$(PIPELINE_DIR)patch.csv\
+	$(PIPELINE_DIR)skip.csv\
+	$(PIPELINE_DIR)transform.csv
+endif
+
 define run-pipeline
 	mkdir -p $(@D) $(ISSUE_DIR)$(notdir $(@D)) $(COLUMN_FIELD_DIR)$(notdir $(@D)) $(DATASET_RESOURCE_DIR)$(notdir $(@D))
 	digital-land --dataset $(notdir $(@D)) $(DIGITAL_LAND_FLAGS) pipeline $(1) --issue-dir $(ISSUE_DIR)$(notdir $(@D)) --column-field-dir $(COLUMN_FIELD_DIR)$(notdir $(@D)) --dataset-resource-dir $(DATASET_RESOURCE_DIR)$(notdir $(@D)) $(PIPELINE_FLAGS) $< $@
@@ -76,11 +99,9 @@ define build-dataset =
 	mkdir -p $(FLATTENED_DIR)
 	time digital-land --dataset $(notdir $(basename $@)) dataset-entries-flattened $@ $(FLATTENED_DIR)
 	md5sum $@ $(basename $@).sqlite3
-	csvstack $(wildcard $(ISSUE_DIR)/$(notdir $(basename $@))/*.csv) > $(basename $@)-issue.csv
-	mkdir -p $(EXPECTATION_DIR)yamls/data_acceptance/
-	mkdir -p $(EXPECTATION_DIR)results/data_acceptance/$(notdir $(basename $@))
-	-curl -qsfL 'https://raw.githubusercontent.com/digital-land/expectations-config/main/dataset_acceptance/$(notdir $(basename $@)).yaml' > $(EXPECTATION_DIR)yamls/data_acceptance/$(notdir $(basename $@)).yaml
-	time digital-land expectations --results-path "$(EXPECTATION_DIR)results/data_acceptance/$(notdir $(basename $@))" --sqlite-dataset-path "$(basename $@).sqlite3" --data-quality-yaml "$(EXPECTATION_DIR)yamls/data_acceptance/$(notdir $(basename $@)).yaml"
+	csvstack $(ISSUE_DIR)$(notdir $(basename $@))/*.csv > $(basename $@)-issue.csv
+	mkdir -p $(EXPECTATION_DIR)
+	time digital-land expectations --results-path "$(EXPECTATION_DIR)$(notdir $(basename $@)).csv" --sqlite-dataset-path "$(basename $@).sqlite3" --data-quality-yaml "$(EXPECTATION_DIR)$(notdir $(basename $@)).yaml"
 endef
 
 collection::
@@ -105,9 +126,8 @@ endif
 endif
 	pyproj sync --file uk_os_OSTN15_NTv2_OSGBtoETRS.tif -v
 ifeq ($(UNAME),Linux)
-	sudo apt-get install libsqlite3-mod-spatialite
+	dpkg-query -W libsqlite3-mod-spatialite >/dev/null 2>&1 || sudo apt-get install libsqlite3-mod-spatialite
 endif
-
 
 clobber::
 	rm -rf $(DATASET_DIRS)
@@ -116,9 +136,7 @@ clean::
 	rm -rf ./var
 
 # local copy of the organisation dataset
-init::
-	@mkdir -p $(CACHE_DIR)
-	curl -qfs "https://raw.githubusercontent.com/digital-land/organisation-dataset/main/collection/organisation.csv" > $(CACHE_DIR)organisation.csv
+init::	$(CACHE_DIR)organisation.csv
 
 makerules::
 	curl -qfsL '$(SOURCE_URL)/makerules/main/pipeline.mk' > makerules/pipeline.mk
@@ -132,11 +150,15 @@ save-transformed::
 save-dataset::
 	aws s3 sync $(DATASET_DIR) s3://$(COLLECTION_DATASET_BUCKET_NAME)/$(REPOSITORY)/$(DATASET_DIR) --no-progress
 	@mkdir -p $(FLATTENED_DIR)
+ifeq ($(HOISTED_COLLECTION_DATASET_BUCKET_NAME),digital-land-$(ENVIRONMENT)-collection-dataset-hoisted)
 	aws s3 sync $(FLATTENED_DIR) s3://$(HOISTED_COLLECTION_DATASET_BUCKET_NAME)/data/ --no-progress
+else
+	aws s3 sync $(FLATTENED_DIR) s3://$(HOISTED_COLLECTION_DATASET_BUCKET_NAME)/dataset/ --no-progress
+endif
 
 save-expectations::
-	@mkdir -p $(EXPECTATION_DIR)results/
-	aws s3 sync $(EXPECTATION_DIR)results/ s3://$(COLLECTION_DATASET_BUCKET_NAME)/$(REPOSITORY)/$(EXPECTATION_DIR)
+	@mkdir -p $(EXPECTATION_DIR)
+	aws s3 sync $(EXPECTATION_DIR) s3://$(COLLECTION_DATASET_BUCKET_NAME)/$(EXPECTATION_DIR) --exclude "*" --include "*.csv"
 
 # convert an individual resource
 # .. this assumes conversion is the same for every dataset, but it may not be soon
@@ -155,3 +177,12 @@ datasette:	metadata.json
 	--setting sql_time_limit_ms 5000 \
 	--load-extension $(SPATIALITE_EXTENSION) \
 	--metadata metadata.json
+
+$(PIPELINE_DIR)%.csv:
+	@mkdir -p $(PIPELINE_DIR)
+	curl -qfsL '$(PIPELINE_CONFIG_URL)$(notdir $@)' > $@
+
+config:: $(PIPELINE_CONFIG_FILES)
+
+clean::
+	rm -f $(PIPELINE_CONFIG_FILES)
